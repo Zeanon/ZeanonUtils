@@ -15,6 +15,7 @@ public class ZeanonUtils extends JavaPlugin {
         PluginManager pm = Bukkit.getServer().getPluginManager();
         pm.registerEvents(cmds, this);
         Objects.requireNonNull(getCommand("playerheads")).setExecutor(cmds);
+        Objects.requireNonNull(getCommand("zeanonutils")).setExecutor(cmds);
         System.out.println("[" + this.getName() + "] " + this + " successfully launched...");
     }
 }

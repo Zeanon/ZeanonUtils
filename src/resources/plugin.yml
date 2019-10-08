@@ -8,3 +8,6 @@ commands:
   playerheads:
     description: Get yourself a player head
     aliases: [ph, playerhead]
+  zeanonutils:
+    description: Basic command
+    aliases: [utils]
