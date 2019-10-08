@@ -80,7 +80,7 @@ public class CoammandHandler implements Listener, CommandExecutor {
     public boolean onPlayerCommand(PlayerCommandPreprocessEvent event) {
         Player p = event.getPlayer();
         String[] args = event.getMessage().split(" ");
-        if (args[0].equalsIgnoreCase("//wand")) {
+        if (args.length == 1 && args[0].equalsIgnoreCase("//wand")) {
             event.setCancelled(true);
             ItemStack wand = new ItemStack(Material.WOODEN_AXE, 1);
             ItemMeta wandMeta = wand.getItemMeta();
