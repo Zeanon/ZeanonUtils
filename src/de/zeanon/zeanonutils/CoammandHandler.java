@@ -67,7 +67,7 @@ public class CoammandHandler implements Listener, CommandExecutor {
                 }
                 p.getInventory().addItem(skull);
                 p.sendMessage(ChatColor.DARK_BLUE + "You got " + ChatColor.BLUE + args[0] + "'s" + ChatColor.DARK_BLUE + " head.");
-            } else if (args.length == 1 && args[0].equalsIgnoreCase("update")) {
+            } else if (command.getName().equals("zeanonutils") && args.length == 1 && args[0].equalsIgnoreCase("update")) {
                 Helper.update(p, path);
                 return true;
             }
