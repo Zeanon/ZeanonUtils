@@ -72,7 +72,7 @@ public class CoammandHandler implements Listener, CommandExecutor {
         return true;
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public boolean onPlayerCommand(PlayerCommandPreprocessEvent event) {
         Player p = event.getPlayer();
         String[] args = event.getMessage().split(" ");
