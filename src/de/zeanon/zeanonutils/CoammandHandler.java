@@ -189,6 +189,7 @@ public class CoammandHandler implements Listener, CommandExecutor {
                                         outputStream.close();
                                     }
                                 }
+                                
                                 PluginManager pm = Bukkit.getPluginManager();
                                 if (pm.getPlugin("PlugMan") != null && pm.isPluginEnabled(pm.getPlugin("PlugMan"))) {
                                     PluginUtil.load(args[2]);
