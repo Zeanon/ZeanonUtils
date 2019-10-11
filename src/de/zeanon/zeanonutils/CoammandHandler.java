@@ -234,18 +234,4 @@ public class CoammandHandler implements Listener, CommandExecutor {
         Player p = event.getPlayer();
         Helper.removeDownloadRequest(p);
     }
-
-   /* @EventHandler(priority = EventPriority.HIGH)
-    public void onTab(TabCompleteEvent event) {
-        String message = event.getBuffer();
-        while (message.contains("  ")) {
-            message = message.replaceAll(" {2}", " ");
-        }
-        String[] args = message.replaceAll("schemmanager:", "").split(" ");
-        if (args[0].equalsIgnoreCase("/schemmanager") && ((args.length == 2 && !event.getBuffer().endsWith(" ")) || (args.length == 1 && event.getBuffer().endsWith(" ")))) {
-            event.setCancelled(true);
-            String arg = args.length == 2 ? args[1] : "";
-            event.setCompletions(Helper.onTab(arg));
-        }
-    }*/
 }
