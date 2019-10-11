@@ -15,10 +15,8 @@
                 <filtering>true</filtering>
                 <targetPath>.</targetPath>
                 <directory>${basedir}/src/resources/</directory>
-                <includes>
-                    <include>**/*.yml</include>
-                </includes>
             </resource>
+
         </resources>
         <plugins>
             <plugin>
