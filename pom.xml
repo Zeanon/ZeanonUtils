@@ -16,7 +16,6 @@
                 <targetPath>.</targetPath>
                 <directory>${basedir}/src/resources/</directory>
             </resource>
-
         </resources>
         <plugins>
             <plugin>
