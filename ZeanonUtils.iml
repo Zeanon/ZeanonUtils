@@ -25,6 +25,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.md-5:bungeecord-chat:1.13-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.yaml:snakeyaml:1.23" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: commons-io:commons-io:2.6" level="project" />
-    <orderEntry type="library" name="Maven: com.rylinaux:PlugMan:2.1.6" level="project" />
+    <orderEntry type="library" name="Maven: com.rylinaux:plugman:2.1.6" level="project" />
   </component>
 </module>
