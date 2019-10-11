@@ -150,6 +150,7 @@ class Helper {
         return downloadRequests.contains(p.getUniqueId().toString());
     }
 
+    @SuppressWarnings("Duplicates")
     static boolean writeToFile(File file, BufferedInputStream inputStream) {
         try {
             FileOutputStream outputStream = null;
