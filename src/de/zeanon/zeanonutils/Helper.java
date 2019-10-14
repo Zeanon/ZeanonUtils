@@ -151,7 +151,7 @@ class Helper {
     }
 
     @SuppressWarnings("Duplicates")
-    static boolean writeToFile(File file, BufferedInputStream inputStream) {
+    static void writeToFile(File file, BufferedInputStream inputStream) {
         try {
             FileOutputStream outputStream = null;
             try {
@@ -167,7 +167,6 @@ class Helper {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                return false;
             } finally {
                 if (inputStream != null) {
                     inputStream.close();
@@ -176,10 +175,8 @@ class Helper {
                     outputStream.close();
                 }
             }
-            return true;
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
     }
 }
