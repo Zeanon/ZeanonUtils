@@ -21,6 +21,7 @@ import java.util.Objects;
 
 class Helper {
 
+    private static final int BUFFER_SIZE = 8192;
     private static ArrayList<String> downloadRequests = new ArrayList<>();
 
     @SuppressWarnings({"Duplicates"})
@@ -151,28 +152,15 @@ class Helper {
     }
 
     @SuppressWarnings("Duplicates")
-    static void writeToFile(File file, BufferedInputStream inputStream) {
-        try {
-            FileOutputStream outputStream = null;
-            try {
-                if (!file.exists()) {
-                    Files.copy(inputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                } else {
-                    outputStream = new FileOutputStream(file);
-                    final byte[] data = new byte[5120];
-                    int count;
-                    while ((count = inputStream.read(data, 0, 5120)) != -1) {
-                        outputStream.write(data, 0, count);
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-                if (outputStream != null) {
-                    outputStream.close();
+    static void writeToFile(final File file, final BufferedInputStream inputStream) {
+        try (FileOutputStream outputStream = new FileOutputStream(file)) {
+            if (!file.exists()) {
+                Files.copy(inputStream, file.toPath());
+            } else {
+                final byte[] data = new byte[BUFFER_SIZE];
+                int count;
+                while ((count = inputStream.read(data, 0, BUFFER_SIZE)) != -1) {
+                    outputStream.write(data, 0, count);
                 }
             }
         } catch (IOException e) {
