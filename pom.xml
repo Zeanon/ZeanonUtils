@@ -12,7 +12,6 @@
         <sourceDirectory>${basedir}/src/</sourceDirectory>
         <resources>
             <resource>
-
                 <filtering>true</filtering>
                 <targetPath>.</targetPath>
                 <directory>${basedir}/src/resources/</directory>
