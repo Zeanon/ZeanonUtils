@@ -21,10 +21,8 @@ import org.bukkit.plugin.PluginManager;
 
 class Helper {
 
-	private static final int BUFFER_SIZE = 8192;
-	private static ArrayList<String> downloadRequests = new ArrayList<>();
+	private static final ArrayList<String> downloadRequests = new ArrayList<>();
 
-	@SuppressWarnings({"Duplicates"})
 	static void update(Player p, String path) {
 		String fileName = null;
 		try {
@@ -157,9 +155,9 @@ class Helper {
 			if (!file.exists()) {
 				Files.copy(inputStream, file.toPath());
 			} else {
-				final byte[] data = new byte[BUFFER_SIZE];
+				final byte[] data = new byte[8192];
 				int count;
-				while ((count = inputStream.read(data, 0, BUFFER_SIZE)) != -1) {
+				while ((count = inputStream.read(data, 0, 8192)) != -1) {
 					outputStream.write(data, 0, count);
 				}
 			}

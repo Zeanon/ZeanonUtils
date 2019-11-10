@@ -37,7 +37,7 @@ import org.bukkit.plugin.PluginManager;
 public class CommandHandler implements Listener, CommandExecutor {
 
 	static Plugin plugin;
-	private String path;
+	private final String path;
 
 	CommandHandler(Plugin plugin) {
 		CommandHandler.plugin = plugin;
