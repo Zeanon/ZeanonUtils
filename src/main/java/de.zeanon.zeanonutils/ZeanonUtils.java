@@ -6,7 +6,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
-class ZeanonUtils extends JavaPlugin {
+public class ZeanonUtils extends JavaPlugin {
 
 	private final CommandHandler cmds = new CommandHandler(this);
 

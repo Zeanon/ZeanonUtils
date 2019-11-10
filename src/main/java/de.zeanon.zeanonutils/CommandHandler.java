@@ -200,7 +200,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 						if (args[3].equals("deny")) {
 							event.setCancelled(true);
 							Helper.removeDownloadRequest(p);
-							p.sendMessage(ChatColor.DARK_PURPLE + args[2] + ChatColor.RED + " wurde nicht �berschrieben.");
+							p.sendMessage(ChatColor.DARK_PURPLE + args[2] + ChatColor.RED + " wurde nicht überschrieben.");
 							return true;
 						}
 					}
