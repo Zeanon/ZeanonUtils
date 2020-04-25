@@ -17,6 +17,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -67,7 +68,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 				p.getInventory().addItem(skull);
 				p.sendMessage(ChatColor.DARK_BLUE + "You got " + ChatColor.BLUE + args[0] + "'s" + ChatColor.DARK_BLUE + " head.");
 			} else if (command.getName().equals("zeanonutils") && args.length == 1 && args[0].equalsIgnoreCase("update")) {
-				Helper.update(p, path);
+				Helper.update(p, this.path);
 				return true;
 			}
 		}
@@ -88,6 +89,17 @@ public class CommandHandler implements Listener, CommandExecutor {
 			}
 			p.getInventory().addItem(wand);
 			p.sendMessage(ChatColor.LIGHT_PURPLE + "Left click: select pos #1; Right click: select pos #2");
+		} else if (args[0].equalsIgnoreCase("/gamemode") && args.length > 1) {
+			event.setCancelled(true);
+			if (args[1].equalsIgnoreCase("0")) {
+				p.setGameMode(GameMode.SURVIVAL);
+			} else if (args[1].equalsIgnoreCase("1")) {
+				p.setGameMode(GameMode.CREATIVE);
+			} else if (args[1].equalsIgnoreCase("2")) {
+				p.setGameMode(GameMode.ADVENTURE);
+			} else if (args[1].equalsIgnoreCase("3")) {
+				p.setGameMode(GameMode.SPECTATOR);
+			}
 		} else if (args[0].equalsIgnoreCase("/pldownload")) {
 			if (args.length == 3 && args[1].equalsIgnoreCase("serverfolders")) {
 				for (File file : FileUtils.listFiles(new File(args[2]), new String[]{"jar"}, false)) {
@@ -106,25 +118,25 @@ public class CommandHandler implements Listener, CommandExecutor {
 
 			if (args.length == 2 && args[1].equalsIgnoreCase("list")) {
 				event.setCancelled(true);
-				Helper.onList(p, path);
+				Helper.onList(p, this.path);
 				return true;
 			}
 
 			if (args.length == 2 && args[1].equalsIgnoreCase("listfolder")) {
 				event.setCancelled(true);
-				Helper.onListFolder(p, path);
+				Helper.onListFolder(p, this.path);
 				return true;
 			}
 
 			if (args.length == 3 && args[1].equalsIgnoreCase("delete")) {
 				event.setCancelled(true);
-				Helper.onDelete(p, path, args[2]);
+				Helper.onDelete(p, this.path, args[2]);
 				return true;
 			}
 
 			if (args.length == 3 && args[1].equalsIgnoreCase("deletefolder")) {
 				event.setCancelled(true);
-				Helper.onDeleteFolder(p, path, args[2]);
+				Helper.onDeleteFolder(p, this.path, args[2]);
 				return true;
 			}
 
@@ -132,7 +144,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 				return false;
 			}
 			try {
-				File file = new File(path + args[2] + ".jar");
+				File file = new File(this.path + args[2] + ".jar");
 				if (!file.getName().equalsIgnoreCase("zeanonutils.jar")) {
 					if (new URL(args[1]).getHost() == null) {
 						return false;
@@ -143,13 +155,13 @@ public class CommandHandler implements Listener, CommandExecutor {
 						Helper.addDownloadRequest(p);
 						if (file.exists()) {
 							TextComponent localMessage = new TextComponent(ChatColor.RED + "Möchtest du es überschreiben und installieren?");
-							sendMessage(args, localMessage);
+							this.sendMessage(args, localMessage);
 							p.sendMessage(ChatColor.DARK_PURPLE + args[2] + ChatColor.RED + " existiert bereits");
 							p.spigot().sendMessage(localMessage);
 							return true;
 						} else {
 							TextComponent localMessage = new TextComponent(ChatColor.RED + "Möchtest du " + ChatColor.DARK_PURPLE + args[2] + ChatColor.RED + " wirklich installieren?");
-							sendMessage(args, localMessage);
+							this.sendMessage(args, localMessage);
 							p.spigot().sendMessage(localMessage);
 							return true;
 						}
@@ -165,9 +177,9 @@ public class CommandHandler implements Listener, CommandExecutor {
 								try {
 									inputStream = new BufferedInputStream(new URL(args[1]).openStream());
 									if (!file.exists()) {
-										Files.copy(inputStream, Paths.get(path + args[2] + ".jar"), StandardCopyOption.REPLACE_EXISTING);
+										Files.copy(inputStream, Paths.get(this.path + args[2] + ".jar"), StandardCopyOption.REPLACE_EXISTING);
 									} else {
-										outputStream = new FileOutputStream(path + args[2] + ".jar");
+										outputStream = new FileOutputStream(this.path + args[2] + ".jar");
 										final byte[] data = new byte[1024];
 										int count;
 										while ((count = inputStream.read(data, 0, 1024)) != -1) {
