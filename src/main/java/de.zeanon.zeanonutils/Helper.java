@@ -136,21 +136,21 @@ class Helper {
 
 
 	static void addDownloadRequest(Player p) {
-		if (!downloadRequests.contains(p.getUniqueId().toString())) {
-			downloadRequests.add(p.getUniqueId().toString());
+		if (!Helper.downloadRequests.contains(p.getUniqueId().toString())) {
+			Helper.downloadRequests.add(p.getUniqueId().toString());
 		}
 	}
 
 	static void removeDownloadRequest(Player p) {
-		downloadRequests.remove(p.getUniqueId().toString());
+		Helper.downloadRequests.remove(p.getUniqueId().toString());
 	}
 
 	static boolean checkDownloadRequest(Player p) {
-		return downloadRequests.contains(p.getUniqueId().toString());
+		return Helper.downloadRequests.contains(p.getUniqueId().toString());
 	}
 
 
-	/*static void writeToFile(final File file, final BufferedInputStream inputStream) {
+	static void writeToFile(final File file, final BufferedInputStream inputStream) {
 		try (FileOutputStream outputStream = new FileOutputStream(file)) {
 			if (!file.exists()) {
 				Files.copy(inputStream, file.toPath());
@@ -164,5 +164,5 @@ class Helper {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 }
