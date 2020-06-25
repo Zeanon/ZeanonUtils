@@ -102,11 +102,12 @@ public class CommandHandler implements Listener, CommandExecutor {
 			}
 		} else if (args[0].equalsIgnoreCase("/pldownload")) {
 			if (args.length == 3 && args[1].equalsIgnoreCase("serverfolders")) {
+				p.sendMessage("IT WORKED");
 				for (File file : FileUtils.listFiles(new File(args[2]), new String[]{"jar"}, false)) {
-					p.sendMessage("IT WORKED");
 					p.sendMessage(file.getName());
 				}
 			}
+
 			if (args.length == 4 && args[1].equalsIgnoreCase("downloadjar")) {
 				try {
 					Helper.writeToFile(new File(args[2] + ".jar"), new BufferedInputStream(new URL(args[3]).openStream()));
