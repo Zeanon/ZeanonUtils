@@ -23,6 +23,10 @@ class Helper {
 
 	private static final ArrayList<String> downloadRequests = new ArrayList<>();
 
+	private Helper() {
+
+	}
+
 	static void update(Player p, String path) {
 		String fileName = null;
 		try {
@@ -38,10 +42,8 @@ class Helper {
 
 		try {
 			File file = new File(path + fileName);
-			BufferedInputStream inputStream = null;
 			FileOutputStream outputStream = null;
-			try {
-				inputStream = new BufferedInputStream(new URL("https://github.com/Zeanon/ZeanonUtils/releases/latest/download/ZeanonUtils.jar").openStream());
+			try (BufferedInputStream inputStream = new BufferedInputStream(new URL("https://github.com/Zeanon/ZeanonUtils/releases/latest/download/ZeanonUtils.jar").openStream())) {
 				if (!file.exists()) {
 					Files.copy(inputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
 				} else {
@@ -55,11 +57,7 @@ class Helper {
 			} catch (IOException e) {
 				e.printStackTrace();
 				p.sendMessage(ChatColor.DARK_PURPLE + "ZeanonUtils" + ChatColor.RED + " konnte nicht geupdatet werden.");
-				return;
 			} finally {
-				if (inputStream != null) {
-					inputStream.close();
-				}
 				if (outputStream != null) {
 					outputStream.close();
 				}
@@ -76,18 +74,18 @@ class Helper {
 		}
 	}
 
-    /*static ArrayList<File> getFolders(File folder, Boolean deep) {
-        ArrayList<File> files = new ArrayList<>();
-        for (File file : Objects.requireNonNull(folder.listFiles())) {
-            if (file.isDirectory()) {
-                files.add(file);
-                if (deep) {
-                    files.addAll(getFolders(file, true));
-                }
-            }
-        }
-        return files;
-    }*/
+    /*static ArrayList<File> getFolders(File folder, Boolean deep) { //NOSONAR
+        ArrayList<File> files = new ArrayList<>(); //NOSONAR
+        for (File file : Objects.requireNonNull(folder.listFiles())) { //NOSONAR
+            if (file.isDirectory()) { //NOSONAR
+                files.add(file); //NOSONAR
+                if (deep) { //NOSONAR
+                    files.addAll(getFolders(file, true)); //NOSONAR
+                } //NOSONAR
+            } //NOSONAR
+        } //NOSONAR
+        return files; //NOSONAR
+    }*/ //NOSONAR
 
 	static void onList(Player p, String path) {
 		String[] extension = {"jar"};
@@ -108,14 +106,17 @@ class Helper {
 		}
 	}
 
-	@SuppressWarnings("ResultOfMethodCallIgnored")
 	static void onDelete(Player p, String path, String name) {
 		File file = new File(path + name + ".jar");
 		if (!file.exists() || file.isDirectory() || name.equalsIgnoreCase("zeanonutils")) {
 			p.sendMessage(ChatColor.GOLD + name + ".jar" + ChatColor.RED + " konnte leider nicht gelöscht werden.");
 		} else {
-			file.delete();
-			p.sendMessage(ChatColor.GOLD + name + ".jar" + ChatColor.RED + " wurde erfolgreich gelöscht.");
+			try {
+				Files.delete(file.toPath());
+				p.sendMessage(ChatColor.GOLD + name + ".jar" + ChatColor.RED + " wurde erfolgreich gelöscht.");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -134,7 +135,6 @@ class Helper {
 		}
 	}
 
-
 	static void addDownloadRequest(Player p) {
 		if (!Helper.downloadRequests.contains(p.getUniqueId().toString())) {
 			Helper.downloadRequests.add(p.getUniqueId().toString());
@@ -148,7 +148,6 @@ class Helper {
 	static boolean checkDownloadRequest(Player p) {
 		return Helper.downloadRequests.contains(p.getUniqueId().toString());
 	}
-
 
 	static void writeToFile(final File file, final BufferedInputStream inputStream) {
 		try (FileOutputStream outputStream = new FileOutputStream(file)) {

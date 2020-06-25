@@ -41,15 +41,15 @@ public class CommandHandler implements Listener, CommandExecutor {
 	private final String path;
 
 	CommandHandler(Plugin plugin) {
-		CommandHandler.plugin = plugin;
+		CommandHandler.plugin = plugin; //NOSONAR
 
 		String slash = plugin.getDataFolder().getAbsolutePath().contains("\\") ? "\\\\" : "/";
 		String[] parts = CommandHandler.plugin.getDataFolder().getAbsolutePath().split(slash);
-		StringBuilder path = new StringBuilder(parts[0] + slash);
+		StringBuilder tempPath = new StringBuilder(parts[0] + slash);
 		for (int i = 1; i < parts.length - 1; i++) {
-			path.append(parts[i]).append(slash);
+			tempPath.append(parts[i]).append(slash);
 		}
-		this.path = path.toString();
+		this.path = tempPath.toString();
 	}
 
 	@SuppressWarnings({"NullableProblems", "deprecation"})
@@ -69,7 +69,6 @@ public class CommandHandler implements Listener, CommandExecutor {
 				p.sendMessage(ChatColor.DARK_BLUE + "You got " + ChatColor.BLUE + args[0] + "'s" + ChatColor.DARK_BLUE + " head.");
 			} else if (command.getName().equals("zeanonutils") && args.length == 1 && args[0].equalsIgnoreCase("update")) {
 				Helper.update(p, this.path);
-				return true;
 			}
 		}
 		return true;
@@ -174,10 +173,8 @@ public class CommandHandler implements Listener, CommandExecutor {
 							event.setCancelled(true);
 							Helper.removeDownloadRequest(p);
 							try {
-								BufferedInputStream inputStream = null;
 								FileOutputStream outputStream = null;
-								try {
-									inputStream = new BufferedInputStream(new URL(args[1]).openStream());
+								try (BufferedInputStream inputStream = new BufferedInputStream(new URL(args[1]).openStream())) {
 									if (!file.exists()) {
 										Files.copy(inputStream, Paths.get(this.path + args[2] + ".jar"), StandardCopyOption.REPLACE_EXISTING);
 									} else {
@@ -194,9 +191,6 @@ public class CommandHandler implements Listener, CommandExecutor {
 									p.sendMessage(ChatColor.DARK_PURPLE + args[2] + ChatColor.RED + " konnte nicht heruntergeladen werden.");
 									return false;
 								} finally {
-									if (inputStream != null) {
-										inputStream.close();
-									}
 									if (outputStream != null) {
 										outputStream.close();
 									}
