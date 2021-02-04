@@ -76,7 +76,7 @@ class Helper {
 
     /*static ArrayList<File> getFolders(File folder, Boolean deep) { //NOSONAR
         ArrayList<File> files = new ArrayList<>(); //NOSONAR
-        for (File file : Objects.requireNonNull(folder.listFiles())) { //NOSONAR
+        for (File file : Objects.notNull(folder.listFiles())) { //NOSONAR
             if (file.isDirectory()) { //NOSONAR
                 files.add(file); //NOSONAR
                 if (deep) { //NOSONAR
