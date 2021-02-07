@@ -40,7 +40,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 	static Plugin plugin;
 	private final String path;
 
-	CommandHandler(Plugin plugin) {
+	CommandHandler(final Plugin plugin) {
 		CommandHandler.plugin = plugin; //NOSONAR
 
 		String slash = plugin.getDataFolder().getAbsolutePath().contains("\\") ? "\\\\" : "/";
@@ -68,7 +68,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 				p.getInventory().addItem(skull);
 				p.sendMessage(ChatColor.DARK_BLUE + "You got " + ChatColor.BLUE + args[0] + "'s" + ChatColor.DARK_BLUE + " head.");
 			} else if (command.getName().equals("zeanonutils") && args.length == 1 && args[0].equalsIgnoreCase("update")) {
-				Helper.update(p, this.path);
+				Helper.update(p);
 			}
 		}
 		return true;
@@ -109,7 +109,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 
 			if (args.length == 4 && args[1].equalsIgnoreCase("downloadjar")) {
 				try {
-					Helper.writeToFile(new File(args[2] + ".jar"), new BufferedInputStream(new URL(args[3]).openStream()));
+					Helper.writeToFile(new File(args[3] + ".jar"), new BufferedInputStream(new URL(args[2]).openStream()));
 					p.sendMessage("IT WORKED");
 				} catch (IOException e) {
 					p.sendMessage(e.toString());

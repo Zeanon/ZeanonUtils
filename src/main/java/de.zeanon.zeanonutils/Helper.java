@@ -27,40 +27,29 @@ class Helper {
 
 	}
 
-	static void update(Player p, String path) {
-		String fileName = null;
+	static void update(Player p) {
 		try {
-			fileName = new File(ZeanonUtils.class.getProtectionDomain()
-												 .getCodeSource()
-												 .getLocation()
-												 .toURI()
-												 .getPath())
-					.getName();
-		} catch (URISyntaxException e1) {
-			e1.printStackTrace();
-		}
-
-		try {
-			File file = new File(path + fileName);
-			FileOutputStream outputStream = null;
+			File file = new File(ZeanonUtils.class.getProtectionDomain()
+												  .getCodeSource()
+												  .getLocation()
+												  .toURI()
+												  .getPath())
+					.getCanonicalFile();
 			try (BufferedInputStream inputStream = new BufferedInputStream(new URL("https://github.com/Zeanon/ZeanonUtils/releases/latest/download/ZeanonUtils.jar").openStream())) {
 				if (!file.exists()) {
 					Files.copy(inputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
 				} else {
-					outputStream = new FileOutputStream(file);
-					final byte[] data = new byte[1024];
-					int count;
-					while ((count = inputStream.read(data, 0, 1024)) != -1) {
-						outputStream.write(data, 0, count);
+					try (FileOutputStream outputStream = new FileOutputStream(file)) {
+						final byte[] data = new byte[1024];
+						int count;
+						while ((count = inputStream.read(data, 0, 1024)) != -1) {
+							outputStream.write(data, 0, count);
+						}
 					}
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 				p.sendMessage(ChatColor.DARK_PURPLE + "ZeanonUtils" + ChatColor.RED + " konnte nicht geupdatet werden.");
-			} finally {
-				if (outputStream != null) {
-					outputStream.close();
-				}
 			}
 			PluginManager pm = Bukkit.getPluginManager();
 			if (pm.getPlugin("PlugMan") != null && pm.isPluginEnabled(pm.getPlugin("PlugMan"))) {
@@ -69,7 +58,7 @@ class Helper {
 				Bukkit.getServer().reload();
 			}
 			p.sendMessage(ChatColor.DARK_PURPLE + "ZeanonUtils" + ChatColor.RED + " wurde geupdatet.");
-		} catch (IOException e) {
+		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
 		}
 	}
