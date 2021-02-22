@@ -89,7 +89,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 			}
 			p.getInventory().addItem(wand);
 			p.sendMessage(ChatColor.LIGHT_PURPLE + "Left click: select pos #1; Right click: select pos #2");
-		} else if ((args[0].equalsIgnoreCase("/gamemode") || args[0].equalsIgnoreCase("/gm") || args[0].equalsIgnoreCase("/g")) && args.length > 1 && (args[1].equalsIgnoreCase("0") || args[1].equalsIgnoreCase("1") || args[1].equalsIgnoreCase("2") || args[1].equalsIgnoreCase("3"))) {
+		} else if (args.length > 1 && (args[0].equalsIgnoreCase("/gamemode") || args[0].equalsIgnoreCase("/gm") || args[0].equalsIgnoreCase("/g")) && (args[1].equalsIgnoreCase("0") || args[1].equalsIgnoreCase("1") || args[1].equalsIgnoreCase("2") || args[1].equalsIgnoreCase("3"))) {
 			event.setCancelled(true);
 			if (args[1].equalsIgnoreCase("0")) {
 				p.setGameMode(GameMode.SURVIVAL);

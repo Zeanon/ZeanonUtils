@@ -3,11 +3,12 @@ version: ${project.version}
 description: ${project.description}
 author: Zeanon
 main: de.zeanon.zeanonutils.ZeanonUtils
-softdepend: [PlugMan]
+api-version: 1.13
+softdepend: [ PlugMan ]
 commands:
   playerheads:
     description: Get yourself a player head
-    aliases: [ph, playerhead]
+    aliases: [ ph, playerhead ]
   zeanonutils:
     description: Basic command
-    aliases: [utils]
+    aliases: [ utils ]
