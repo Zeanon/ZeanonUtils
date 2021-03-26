@@ -172,7 +172,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 					}
 
 					if (args.length == 4 && Helper.checkDownloadRequest(p)) {
-						if (args[3].equals("confirm")) {
+						if (args[3].equals("-confirm")) {
 							event.setCancelled(true);
 							Helper.removeDownloadRequest(p);
 							try {
@@ -208,7 +208,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 								return false;
 							}
 						}
-						if (args[3].equals("deny")) {
+						if (args[3].equals("-deny")) {
 							event.setCancelled(true);
 							Helper.removeDownloadRequest(p);
 							p.sendMessage(ChatColor.DARK_PURPLE + args[2] + ChatColor.RED + " wurde nicht überschrieben.");
