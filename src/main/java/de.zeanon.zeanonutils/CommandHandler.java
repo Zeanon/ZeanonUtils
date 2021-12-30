@@ -167,7 +167,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 									}
 									p.sendMessage(ChatColor.DARK_PURPLE + args[2] + ChatColor.RED + " wurde heruntergeladen.");
 								} catch (IOException e) {
-									e.printStackTrace();
+									Bukkit.getLogger().log(Level.SEVERE, e.getMessage(), e.getCause());
 									p.sendMessage(ChatColor.DARK_PURPLE + args[2] + ChatColor.RED + " konnte nicht heruntergeladen werden.");
 									return false;
 								} finally {
@@ -180,7 +180,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 									PluginUtil.load(args[2]);
 								}
 							} catch (IOException e) {
-								e.printStackTrace();
+								Bukkit.getLogger().log(Level.SEVERE, e.getMessage(), e.getCause());
 								p.sendMessage(ChatColor.DARK_PURPLE + args[2] + ChatColor.RED + " konnte nicht heruntergeladen werden.");
 								return false;
 							}
@@ -194,7 +194,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 					}
 				}
 			} catch (MalformedURLException e) {
-				e.printStackTrace();
+				Bukkit.getLogger().log(Level.SEVERE, e.getMessage(), e.getCause());
 				return false;
 			}
 		}

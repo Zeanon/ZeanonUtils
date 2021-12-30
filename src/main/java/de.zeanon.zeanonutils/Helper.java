@@ -48,7 +48,7 @@ class Helper {
 					}
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				Bukkit.getLogger().log(Level.SEVERE, e.getMessage(), e.getCause());
 				p.sendMessage(ChatColor.DARK_PURPLE + "ZeanonUtils" + ChatColor.RED + " konnte nicht geupdatet werden.");
 			}
 			PluginManager pm = Bukkit.getPluginManager();
@@ -59,7 +59,7 @@ class Helper {
 			}
 			p.sendMessage(ChatColor.DARK_PURPLE + "ZeanonUtils" + ChatColor.RED + " wurde geupdatet.");
 		} catch (IOException | URISyntaxException e) {
-			e.printStackTrace();
+			Bukkit.getLogger().log(Level.SEVERE, e.getMessage(), e.getCause());
 		}
 	}
 
@@ -104,7 +104,7 @@ class Helper {
 				Files.delete(file.toPath());
 				p.sendMessage(ChatColor.GOLD + name + ".jar" + ChatColor.RED + " wurde erfolgreich gelöscht.");
 			} catch (IOException e) {
-				e.printStackTrace();
+				Bukkit.getLogger().log(Level.SEVERE, e.getMessage(), e.getCause());
 			}
 		}
 	}
@@ -118,7 +118,7 @@ class Helper {
 				FileUtils.deleteDirectory(file);
 				p.sendMessage(ChatColor.GOLD + name + ChatColor.RED + " wurde erfolgreich gelöscht.");
 			} catch (IOException e) {
-				e.printStackTrace();
+				Bukkit.getLogger().log(Level.SEVERE, e.getMessage(), e.getCause());
 				p.sendMessage(ChatColor.GOLD + name + ChatColor.RED + " konnte leider nicht gelöscht werden.");
 			}
 		}
@@ -150,7 +150,7 @@ class Helper {
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			Bukkit.getLogger().log(Level.SEVERE, e.getMessage(), e.getCause());
 		}
 	}
 }
