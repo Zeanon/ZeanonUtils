@@ -115,7 +115,7 @@ class Helper {
 			p.sendMessage(ChatColor.GOLD + name + ChatColor.RED + " konnte leider nicht gelöscht werden.");
 		} else {
 			try {
-				BaseFileUtils.deleteDirectory(file);
+				FileUtils.deleteDirectory(file);
 				p.sendMessage(ChatColor.GOLD + name + ChatColor.RED + " wurde erfolgreich gelöscht.");
 			} catch (final IOException e) {
 				p.sendMessage(ChatColor.GOLD + name + ChatColor.RED + " konnte leider nicht gelöscht werden.");
